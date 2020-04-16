@@ -1,2 +1,8 @@
-﻿  StateMachine.cpp
+﻿  Node.cpp
+E:\spring2020\compilers\compiler2\compiler2\Node.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
+E:\spring2020\compilers\compiler2\compiler2\Node.cpp(112,20): warning C4018: '<': signed/unsigned mismatch
+E:\spring2020\compilers\compiler2\compiler2\Node.cpp(121,20): warning C4018: '<': signed/unsigned mismatch
+E:\spring2020\compilers\compiler2\compiler2\Node.cpp(139,20): warning C4018: '<': signed/unsigned mismatch
+E:\spring2020\compilers\compiler2\compiler2\Node.cpp(147,20): warning C4018: '<': signed/unsigned mismatch
+E:\spring2020\compilers\compiler2\compiler2\Node.cpp(155,20): warning C4018: '<': signed/unsigned mismatch
   compiler2.vcxproj -> E:\spring2020\compilers\compiler2\Debug\compiler2.exe

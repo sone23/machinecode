@@ -110,11 +110,12 @@ public:
 
 class CoutStatementNode :public StatementNode {
 public:
-	CoutStatementNode(ExpressionNode* en);
+	CoutStatementNode();
+	void AddExpression(ExpressionNode* en);
 	~CoutStatementNode();
 	void Interpret();
 	void Code(InstructionsClass& machineCode);
-	ExpressionNode* mEn;
+	vector<ExpressionNode*> mEn;
 };
 
 
