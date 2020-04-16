@@ -101,16 +101,8 @@ CoutStatementNode* ParserClass::CoutStatement()
 	Match(COUT_TOKEN);
 	Match(INSERTION_TOKEN);
 	ExpressionNode* en =  Expression();
-	CoutStatementNode* cn = new CoutStatementNode();
-	cn->AddExpression(en);
-	TokenClass t = mSc->PeekNextToken();
-	if (t.GetTokenType() == INSERTION_TOKEN) {
-		Match(INSERTION_TOKEN);
-		ExpressionNode* en1 = Expression();
-		cn->AddExpression(en1);
-	}
 	Match(SEMICOLON_TOKEN);
-	
+	CoutStatementNode* cn = new CoutStatementNode(en);
 	return cn;
 }
 

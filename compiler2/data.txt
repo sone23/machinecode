@@ -1,14 +1,11 @@
 void main()
 {
 int sum;
-sum = 435;
-if(sum <= 480){
-int pro;
-pro = 5;
-sum = sum + 5;
+sum = 35 + 400;
 cout << sum;
-pro = pro + 5;
-int happy;
+while( sum < 437){
+cout << sum;
+sum = sum + 1;
 }
 
 }

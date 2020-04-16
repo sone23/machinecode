@@ -16,7 +16,6 @@ void CodeAndExecute(string inputFile)
 	InstructionsClass machineCode;
 	root->Code(machineCode);
 	machineCode.Finish();
-	//machineCode.PrintAllMachineCodes();
 	// Execute the machine code instructions previously created
 	machineCode.Execute();
 	// cleanup recursively
@@ -24,6 +23,12 @@ void CodeAndExecute(string inputFile)
 }
 int main() {
 	CodeAndExecute("data.txt");
+	/*InstructionsClass code;
+	
+	cout << "Success!";
+
+	code.Finish();
+	code.Execute();*/
 
 	return 0;
 }

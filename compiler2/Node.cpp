@@ -124,41 +124,6 @@ void StatementGroupNode::Code(InstructionsClass& machineCode)
 	}
 }
 
-void CoutStatementNode::AddExpression(ExpressionNode* en)
-{
-	mEn.push_back(en);
-}
-
-
-CoutStatementNode::CoutStatementNode()
-{
-}
-
-CoutStatementNode::~CoutStatementNode()
-{
-	for (int i = 0; i < mEn.size(); i++) {
-		delete mEn[i];
-	}
-	MSG("CoutNode Deleting");
-}
-
-void CoutStatementNode::Interpret()
-{
-	for (int i = 0; i < mEn.size(); i++) {
-		int eval = mEn[i]->Evaluate();
-		cout << eval << endl;
-	}
-}
-
-void CoutStatementNode::Code(InstructionsClass& machineCode)
-{
-	for (int i = 0; i < mEn.size(); i++) {
-		mEn[i]->CodeEvaluate(machineCode);
-	}
-
-	machineCode.PopAndWrite();
-}
-
 AssignmentStatementNode::AssignmentStatementNode(IdentifierNode* in, ExpressionNode* en)
 {
 	mIn = in;
@@ -255,6 +220,28 @@ void DeclarationStateNode::Code(InstructionsClass& machineCode)
 	mIn->DeclareVariable();
 }
 
+CoutStatementNode::CoutStatementNode(ExpressionNode* en)
+{
+	mEn = en;
+}
+
+CoutStatementNode::~CoutStatementNode()
+{
+	delete mEn;
+	MSG("CoutNode Deleting");
+}
+
+void CoutStatementNode::Interpret()
+{
+	int eval = mEn->Evaluate();
+	cout << eval << "\r" << endl;
+}
+
+void CoutStatementNode::Code(InstructionsClass& machineCode)
+{
+	mEn->CodeEvaluate(machineCode);
+	machineCode.PopAndWrite();
+}
 
 ExpressionNode::ExpressionNode()
 {
