@@ -1,2 +1,3 @@
-﻿  Main.cpp
+﻿  Parser.cpp
+E:\spring2020\compilers\compiler2\compiler2\Parser.cpp(114): warning C4715: 'ParserClass::AssignmentStatement': not all control paths return a value
   compiler2.vcxproj -> E:\spring2020\compilers\compiler2\Debug\compiler2.exe

@@ -151,6 +151,63 @@ void AssignmentStatementNode::Code(InstructionsClass& machineCode)
 
 }
 
+
+PlusEqualNode::PlusEqualNode(IdentifierNode* in, ExpressionNode* en)
+{
+	mIn = in;
+	mEn = en;
+}
+
+PlusEqualNode::~PlusEqualNode()
+{
+	delete mIn;
+	delete mEn;
+	MSG("PlusEqualNode Deleting");
+}
+
+void PlusEqualNode::Interpret()
+{
+	int eval = mEn->Evaluate() + mIn->Evaluate();
+	mIn->SetValue(eval);
+}
+
+void PlusEqualNode::Code(InstructionsClass& machineCode)
+{
+	int index = mIn->GetIndex();
+	mIn->CodeEvaluate(machineCode);
+	mEn->CodeEvaluate(machineCode);
+	machineCode.PopPopAddPush();
+	machineCode.PopAndStore(index);
+}
+
+MinusEqualNode::MinusEqualNode(IdentifierNode* in, ExpressionNode* en)
+{
+	mIn = in;
+	mEn = en;
+}
+
+MinusEqualNode::~MinusEqualNode()
+{
+	delete mIn;
+	delete mEn;
+	MSG("MinusEqualNode Deleting");
+}
+
+void MinusEqualNode::Interpret()
+{
+	int eval = mIn->Evaluate() - mEn->Evaluate();
+	mIn->SetValue(eval);
+}
+
+void MinusEqualNode::Code(InstructionsClass& machineCode)
+{
+	int index = mIn->GetIndex();
+	mIn->CodeEvaluate(machineCode);
+	mEn->CodeEvaluate(machineCode);
+	machineCode.PopPopSubPush();
+	machineCode.PopAndStore(index);
+}
+
 IntegerNode::IntegerNode(int n)
 {
 	mInteger = n;
@@ -220,27 +277,40 @@ void DeclarationStateNode::Code(InstructionsClass& machineCode)
 	mIn->DeclareVariable();
 }
 
-CoutStatementNode::CoutStatementNode(ExpressionNode* en)
+CoutStatementNode::CoutStatementNode()
 {
-	mEn = en;
+}
+
+void CoutStatementNode::AddExpression(ExpressionNode* en)
+{
+	mEn.push_back(en);
 }
 
 CoutStatementNode::~CoutStatementNode()
 {
-	delete mEn;
+	for (int i = 0; i < mEn.size(); i++) {
+		delete mEn[i];
+	}
 	MSG("CoutNode Deleting");
 }
 
 void CoutStatementNode::Interpret()
 {
-	int eval = mEn->Evaluate();
-	cout << eval << "\r" << endl;
+	for (int i = 0; i < mEn.size(); i++) {
+		int eval = mEn[i]->Evaluate();
+		cout << eval;
+	}
+	
 }
 
 void CoutStatementNode::Code(InstructionsClass& machineCode)
 {
-	mEn->CodeEvaluate(machineCode);
-	machineCode.PopAndWrite();
+	for (int i = 0; i < mEn.size(); i++) {
+		mEn[i]->CodeEvaluate(machineCode);
+		machineCode.PopAndWrite();
+	}
+	
+	
 }
 
 ExpressionNode::ExpressionNode()
@@ -543,3 +613,5 @@ void OrNode::CodeEvaluate(InstructionsClass& machineCode)
 	mRhs->CodeEvaluate(machineCode);
 	machineCode.PopPopOrPush();
 }
+
+

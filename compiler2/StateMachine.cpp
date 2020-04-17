@@ -10,7 +10,6 @@ StateMachineClass::StateMachineClass()
 	}
 	mCurrentState = START_STATE;
 	mLegalMoves[START_STATE][ENDFILE_CHAR] = ENDFILE_STATE;
-	mLegalMoves[START_STATE][PLUS_CHAR] = PLUS_STATE;
 	mLegalMoves[START_STATE][LCURLY_CHAR] = LCURLY_STATE;
 	mLegalMoves[START_STATE][RCURLY_CHAR] = RCURLY_STATE;
 	mLegalMoves[START_STATE][SEMICOLON_CHAR] = SEMICOLON_STATE;
@@ -26,7 +25,6 @@ StateMachineClass::StateMachineClass()
 	mLegalMoves[START_STATE][LESSEQUAL_CHAR] = LESSEQUAL_STATE;
 	mLegalMoves[START_STATE][GREATER_CHAR] = GREATER_STATE;
 	mLegalMoves[START_STATE][GREATEREQUAL_CHAR] = GREATEREQUAL_STATE;
-	mLegalMoves[START_STATE][EQUAL_CHAR] = EQUAL_STATE;
 	mLegalMoves[START_STATE][PLUS_CHAR] = PLUS_STATE;
 	mLegalMoves[START_STATE][MINUS_CHAR] = MINUS_STATE;
 	mLegalMoves[START_STATE][TIMES_CHAR] = TIMES_STATE;
@@ -87,10 +85,13 @@ StateMachineClass::StateMachineClass()
 
 	mLegalMoves[ASSIGNMENT_STATE][ASSIGNMENT_CHAR] = EQUAL_STATE;
 	mLegalMoves[LESSTHAN_STATE][ASSIGNMENT_CHAR] = LESSEQUAL_STATE;
-	mLegalMoves[GREATEREQUAL_STATE][ASSIGNMENT_CHAR] = GREATEREQUAL_STATE;
+	mLegalMoves[GREATER_STATE][ASSIGNMENT_CHAR] = GREATEREQUAL_STATE;
 	mLegalMoves[EXCLAMATION_STATE][ASSIGNMENT_CHAR] = NOTEQUAL_STATE;
 	mLegalMoves[HALF_AND_STATE][AND_CHAR] = AND_STATE;
 	mLegalMoves[HALF_OR_STATE][OR_CHAR] = OR_STATE;
+
+	mLegalMoves[PLUS_STATE][ASSIGNMENT_CHAR] = PLUS_EQUAL_STATE;
+	mLegalMoves[MINUS_STATE][ASSIGNMENT_CHAR] = MINUS_EQUAL_STATE;
 
 
 	mLegalMoves[DIVIDE_STATE][DIVIDE_CHAR] = LINECOMMENT_STATE;
@@ -124,6 +125,8 @@ StateMachineClass::StateMachineClass()
 	mCorrespondingTokenTypes[ENDFILE_STATE] = ENDFILE_TOKEN;
 	mCorrespondingTokenTypes[AND_STATE] = AND;
 	mCorrespondingTokenTypes[OR_STATE] = OR;
+	mCorrespondingTokenTypes[PLUS_EQUAL_STATE] = PLUS_EQUAL_TOKEN;
+	mCorrespondingTokenTypes[MINUS_EQUAL_STATE] = MINUS_EQUAL_TOKEN;
 }
 
 MachineState StateMachineClass::UpdateState(char currentCharacter, TokenType& correspondingTokenType)
@@ -139,6 +142,8 @@ MachineState StateMachineClass::UpdateState(char currentCharacter, TokenType& co
 		charType = TIMES_CHAR;
 	else if (currentCharacter == '+')
 		charType = PLUS_CHAR;
+	else if (currentCharacter == '-')
+		charType = MINUS_CHAR;
 	else if (currentCharacter == '(')
 		charType = LPAREN;
 	else if (currentCharacter == ')')

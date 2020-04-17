@@ -1,11 +1,7 @@
 void main()
 {
-int sum;
-sum = 35 + 400;
-cout << sum;
-while( sum < 437){
-cout << sum;
-sum = sum + 1;
-}
+ int x;
+ x = 500;
+ cout << 10 << x+2 << endl << endl << x*3+1 << endl ;
 
 }

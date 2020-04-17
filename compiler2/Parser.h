@@ -24,7 +24,7 @@ public:
 	IntegerNode* Integer();
 	IfStatementNode* IfStatement();
 	WhileStatementNode* WhileStatement();
-	AssignmentStatementNode* AssignmentStatement();
+	StatementNode* AssignmentStatement();
 	CoutStatementNode* CoutStatement();
 	TokenClass Match(TokenType expectedType);
 private:

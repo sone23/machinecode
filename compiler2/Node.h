@@ -108,13 +108,33 @@ public:
 	ExpressionNode* mEn;
 };
 
+class PlusEqualNode :public StatementNode {
+public:
+	PlusEqualNode(IdentifierNode* in, ExpressionNode* en);
+	~PlusEqualNode();
+	void Interpret();
+	void Code(InstructionsClass& machineCode);
+	IdentifierNode* mIn;
+	ExpressionNode* mEn;
+};
+
+class MinusEqualNode :public StatementNode {
+public:
+	MinusEqualNode(IdentifierNode* in, ExpressionNode* en);
+	~MinusEqualNode();
+	void Interpret();
+	void Code(InstructionsClass& machineCode);
+	IdentifierNode* mIn;
+	ExpressionNode* mEn;
+};
 class CoutStatementNode :public StatementNode {
 public:
-	CoutStatementNode(ExpressionNode* en);
+	CoutStatementNode();
+	void AddExpression(ExpressionNode* en);
 	~CoutStatementNode();
 	void Interpret();
 	void Code(InstructionsClass& machineCode);
-	ExpressionNode* mEn;
+	vector<ExpressionNode*> mEn;
 };
 
 

@@ -80,20 +80,37 @@ DeclarationStateNode* ParserClass::DeclarationStatement()
 	
 	Match(INT_TOKEN);
 	IdentifierNode* in = Identifier();
+	TokenClass t = mSc->PeekNextToken();
 	DeclarationStateNode* dsn = new DeclarationStateNode(in);
 	Match(SEMICOLON_TOKEN);
 	return dsn;
 }
 
-AssignmentStatementNode* ParserClass::AssignmentStatement()
+StatementNode* ParserClass::AssignmentStatement()
 {
 	IdentifierNode* in = Identifier();
-	Match(ASSIGNMENT_TOKEN);
-	ExpressionNode* en =  Expression();
-	Match(SEMICOLON_TOKEN);
-	AssignmentStatementNode* an = new AssignmentStatementNode(in, en);
-	return an;
-
+	if (mSc->PeekNextToken().GetTokenType() == ASSIGNMENT_TOKEN) {
+		Match(ASSIGNMENT_TOKEN);
+		ExpressionNode* en = Expression();
+		Match(SEMICOLON_TOKEN);
+		AssignmentStatementNode* an = new AssignmentStatementNode(in, en);
+		return an;
+	}
+	else if (mSc->PeekNextToken().GetTokenType() == PLUS_EQUAL_TOKEN) {
+		Match(PLUS_EQUAL_TOKEN);
+		ExpressionNode* en = Expression();
+		Match(SEMICOLON_TOKEN);
+		PlusEqualNode* pn = new PlusEqualNode(in, en);
+		return pn;
+	}
+	
+	else if (mSc->PeekNextToken().GetTokenType() == MINUS_EQUAL_TOKEN) {
+		Match(MINUS_EQUAL_TOKEN);
+		ExpressionNode* en = Expression();
+		Match(SEMICOLON_TOKEN);
+		MinusEqualNode* pn = new MinusEqualNode(in, en);
+		return pn;
+	}
 }
 
 CoutStatementNode* ParserClass::CoutStatement()
@@ -101,8 +118,21 @@ CoutStatementNode* ParserClass::CoutStatement()
 	Match(COUT_TOKEN);
 	Match(INSERTION_TOKEN);
 	ExpressionNode* en =  Expression();
+	CoutStatementNode* cn = new CoutStatementNode();
+	cn->AddExpression(en);
+	if (mSc->PeekNextToken().GetTokenType() == INSERTION_TOKEN) {
+		do {
+			Match(INSERTION_TOKEN);
+			if (mSc->PeekNextToken().GetTokenType() == ENDL_TOKEN) {
+				Match(ENDL_TOKEN);
+			}
+			else {
+				ExpressionNode* en = Expression();
+				cn->AddExpression(en);
+			}
+		} while (mSc->PeekNextToken().GetTokenType() == INSERTION_TOKEN);
+	}
 	Match(SEMICOLON_TOKEN);
-	CoutStatementNode* cn = new CoutStatementNode(en);
 	return cn;
 }
 
